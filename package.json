@@ -20,6 +20,10 @@
       "url": "https://github.com/chasingmaxwell"
     }
   ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com:infiniteluke/exciter.git"
+  },
   "scripts": {
     "test": "jest --coverage",
     "debug-test": "node --inspect --debug-brk ./node_modules/.bin/jest --runInBand --env jest-environment-node-debug",
