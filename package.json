@@ -4,7 +4,7 @@
   "description": "An easy CRUD wrapper for DynamoDB",
   "main": "lib/Exciter.js",
   "engines": {
-    "node": ">=6 <7"
+    "node": ">=6"
   },
   "contributors": [
     {
