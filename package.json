@@ -1,0 +1,64 @@
+{
+  "name": "exciter",
+  "version": "0.0.0-development",
+  "description": "An easy CRUD wrapper for DynamoDB",
+  "main": "lib/Exciter.js",
+  "engines": {
+    "node": ">=6 <7"
+  },
+  "contributors": [
+    {
+      "name": "Luke",
+      "id": 1127238,
+      "email": "luke@fourkitchens.com",
+      "url": "https://github.com/infiniteluke"
+    },
+    {
+      "name": "Peter Sieg",
+      "id": 3128659,
+      "email": "peter@fourkitchens.com",
+      "url": "https://github.com/chasingmaxwell"
+    }
+  ],
+  "scripts": {
+    "test": "jest --coverage",
+    "debug-test": "node --inspect --debug-brk ./node_modules/.bin/jest --runInBand --env jest-environment-node-debug",
+    "lint": "eslint .",
+    "lint-writing": "alex",
+    "write-readme": "emdaer",
+    "precommit": "yarn run lint && yarn run lint-writing",
+    "prepush": "yarn run test",
+    "commitmsg": "validate-commit-msg",
+    "semantic-release": "semantic-release pre && semantic-release post"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "alex": "^4.0.1",
+    "emdaer": "^0.3.3",
+    "eslint": "^3.14.1",
+    "eslint-config-airbnb-base": "^11.0.1",
+    "eslint-plugin-import": "^2.2.0",
+    "husky": "^0.13.2",
+    "jest": "^19.0.2",
+    "jest-environment-node-debug": "^2.0.0",
+    "mockdate": "^2.0.1",
+    "nodeunit": "^0.10.2",
+    "semantic-release": "^6.3.2",
+    "sinon": "^2.1.0",
+    "validate-commit-msg": "^2.11.2"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.9.0",
+    "lodash": "^4.17.4"
+  },
+  "jest": {
+    "coverageThreshold": {
+      "global": {
+        "branches": 100,
+        "functions": 100,
+        "lines": 100,
+        "statements": 100
+      }
+    }
+  }
+}

@@ -1,0 +1,8 @@
+- title: true
+- text: >-
+    An easy CRUD wrapper for DynamoDB. Working with the DynamoDB SDK is
+    difficult. Exciter abstracts a lot of the DynamoDB-isms away leaving you an
+    intuitive interface for performing CRUD operations on DynamoDB.
+- include: './docs/usage.md'
+- jsdoc: 'lib/Exciter.js'
+- contributors: true

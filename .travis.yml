@@ -1,0 +1,16 @@
+sudo: false
+language: node_js
+node_js:
+  - '6'
+script:
+  - "./.travis-script.sh"
+cache:
+  directories:
+  - node_modules
+before_script:
+  - npm prune
+after_success:
+  - npm run semantic-release
+branches:
+  except:
+    - /^v\d+\.\d+\.\d+$/
