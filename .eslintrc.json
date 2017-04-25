@@ -4,21 +4,18 @@
     "ecmaVersion": 6,
     "sourceType": "script"
   },
-  "extends": "airbnb-base",
+  "extends": [
+    "airbnb-base",
+    "prettier"
+  ],
+  "plugins": [
+    "prettier"
+  ],
   "rules": {
-    "brace-style": ["error", "stroustrup"],
-    "max-len": ["warn", {
-      "code": 100,
-      "comments": 80,
-      "ignoreUrls": true,
-      "ignorePattern": "(logger\\.|new Error\\(|new TypeError\\()",
-      "ignoreTrailingComments": true,
-      "tabWidth": 2
-    }],
+    "prettier/prettier": "error",
     "no-param-reassign": "off",
     "no-underscore-dangle": "off",
     "no-warning-comments": "warn",
-    "quotes": ["error", "single", {"avoidEscape": true, "allowTemplateLiterals": true}],
     "require-jsdoc": ["error", {
       "require": {
         "FunctionDeclaration": true,
@@ -26,14 +23,7 @@
         "ClassDeclaration": true
       }
     }],
-    "valid-jsdoc": "error",
-    "comma-dangle": ["error", {
-      "arrays": "always-multiline",
-      "objects": "always-multiline",
-      "imports": "always-multiline",
-      "exports": "always-multiline",
-      "functions": "never"
-    }]
+    "valid-jsdoc": "error"
   },
   "env": {
     "jest": true
