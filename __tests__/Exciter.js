@@ -184,7 +184,7 @@ test('putReplaceSuccess', (done) => {
     skipMe: null,
   };
   const putStub = sinon.stub(exciter.dynamo, 'put').callsFake(awsPromiseResolve(data));
-  return exciter.put(data, 'fake')
+  return exciter.put(data, _.pick(data, ['userId', 'uuid']), 'fake')
     .then((res) => {
       sinon.assert.calledWith(putStub, {
         TableName: 'fake',
@@ -209,12 +209,16 @@ test('putCreateSuccess', (done) => {
     skipMe: null,
   };
   const putStub = sinon.stub(exciter.dynamo, 'put').callsFake(awsPromiseResolve(data));
-  return exciter.put(data, 'fake', 'userId', true)
+  return exciter.put(data, _.pick(data, ['userId', 'uuid']), 'fake', true)
     .then((res) => {
       sinon.assert.calledWith(putStub, {
         TableName: 'fake',
         Item: data,
-        ConditionExpression: 'attribute_not_exists(userId)',
+        ConditionExpression: 'attribute_not_exists(#userId) OR attribute_not_exists(#uuid)',
+        ExpressionAttributeNames: {
+          '#userId': 'userId',
+          '#uuid': 'uuid',
+        },
       });
       expect(res).toEqual(data);
     })
