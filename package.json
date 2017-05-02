@@ -33,7 +33,7 @@
     "precommit": "yarn run lint && yarn run lint-writing",
     "prepush": "yarn run test",
     "commitmsg": "validate-commit-msg",
-    "semantic-release": "semantic-release pre && semantic-release post"
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "license": "MIT",
   "devDependencies": {
