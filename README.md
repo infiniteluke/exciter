@@ -1,5 +1,7 @@
 # exciter
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/infiniteluke/exciter.svg)](https://greenkeeper.io/)
+
 An easy CRUD wrapper for DynamoDB. Working with the DynamoDB SDK is difficult. Exciter abstracts a lot of the DynamoDB-isms away leaving you an intuitive interface for performing CRUD operations on DynamoDB.
 
 ## Usage
