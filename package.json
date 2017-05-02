@@ -46,7 +46,7 @@
     "jest": "^19.0.2",
     "jest-environment-node-debug": "^2.0.0",
     "mockdate": "^2.0.1",
-    "nodeunit": "^0.10.2",
+    "nodeunit": "^0.11.0",
     "semantic-release": "^6.3.2",
     "sinon": "^2.1.0",
     "validate-commit-msg": "^2.11.2"
