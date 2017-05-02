@@ -64,7 +64,7 @@ Class representing a DynamoDB connection
     * _instance_
         * [.create(data, table, partitionKey)](#Exciter+create) ⇒ <code>Promise</code>
         * [.update(data, primaryKey, table)](#Exciter+update) ⇒ <code>Promise</code>
-        * [.put(data, table, partitionKey, createOnly)](#Exciter+put) ⇒ <code>Promise</code>
+        * [.put(data, primaryKey, table, createOnly)](#Exciter+put) ⇒ <code>Promise</code>
         * [.patch(data, primaryKey, table)](#Exciter+patch) ⇒ <code>Promise</code>
         * [.load(primaryKey, table)](#Exciter+load) ⇒ <code>Promise</code>
         * [.query(primaryKey, table, query)](#Exciter+query) ⇒ <code>Promise</code>
@@ -78,7 +78,7 @@ Class representing a DynamoDB connection
         * [.normalizeDataValues(data)](#Exciter.normalizeDataValues) ⇒ <code>Array</code>
         * [.buildUpdateExpression(attributes)](#Exciter.buildUpdateExpression) ⇒ <code>String</code>
         * [.buildConditionExpression(conditions, groupOperator)](#Exciter.buildConditionExpression) ⇒ <code>String</code>
-        * [.buildExpressionPlaceholders(attributes, substituionChar)](#Exciter.buildExpressionPlaceholders) ⇒ <code>Object</code>
+        * [.buildExpressionPlaceholders(attributes, substitutionChar)](#Exciter.buildExpressionPlaceholders) ⇒ <code>Object</code>
         * [.valueIsEmpty(value)](#Exciter.valueIsEmpty) ⇒ <code>boolean</code>
 
 <a name="new_Exciter_new"></a>
@@ -126,7 +126,7 @@ This is a convenience method which simply proxies the patch() method.
 
 <a name="Exciter+put"></a>
 
-### exciter.put(data, table, partitionKey, createOnly) ⇒ <code>Promise</code>
+### exciter.put(data, primaryKey, table, createOnly) ⇒ <code>Promise</code>
 Creates or entirely replaces an existing record.
 
 **Kind**: instance method of <code>[Exciter](#Exciter)</code>  
@@ -136,8 +136,8 @@ Creates or entirely replaces an existing record.
 | Param | Type | Description |
 | --- | --- | --- |
 | data | <code>Object</code> | Data to store in the given DynamoDB table. |
+| primaryKey | <code>Object</code> | An object containing partitionKey and sortKey key/value properties. The   values provided here will override properties of the same names   contained in the data argument if they are present there. |
 | table | <code>String</code> | The table in which to save the document. |
-| partitionKey | <code>String</code> | The name of the partitionKey attribute. This is used when specifying   createOnly to ensure an existing record does not already exist. |
 | createOnly | <code>Boolean</code> | Whether the operation should succeed if a record with the same partition   key value exists. |
 
 <a name="Exciter+patch"></a>
@@ -341,7 +341,7 @@ Builds a DynamoDB conditional expression.
 
 <a name="Exciter.buildExpressionPlaceholders"></a>
 
-### Exciter.buildExpressionPlaceholders(attributes, substituionChar) ⇒ <code>Object</code>
+### Exciter.buildExpressionPlaceholders(attributes, substitutionChar) ⇒ <code>Object</code>
 Builds expression name and value placeholders from a set of attributes. See
 http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ExpressionPlaceholders.html
 
@@ -351,14 +351,14 @@ http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ExpressionPlaceh
 | Param | Type | Description |
 | --- | --- | --- |
 | attributes | <code>Array</code> | An array of normalized expression attributes as returned by   normalizeExpressionAttribute(). |
-| substituionChar | <code>String</code> | What string to prepend to keys of the object. ex: `#` or `:` |
+| substitutionChar | <code>String</code> | What string to prepend to keys of the object. ex: `#` or `:` |
 
 <a name="Exciter.valueIsEmpty"></a>
 
 ### Exciter.valueIsEmpty(value) ⇒ <code>boolean</code>
 Determines whether a value is empty according to DynamoDB.
 
-DynamoDB does not allow us to store null, undefined, empty string, or empty
+DynamoDB does not allow us to store undefined, empty string, or empty
 array values. This function can be paired with a filter to skip empty
 values when writing to DynamoDB.
 
@@ -372,6 +372,6 @@ values when writing to DynamoDB.
 
 ## Contributors
 
-[![Luke](https://avatars.githubusercontent.com/u/1127238?s=130)](https://github.com/infiniteluke) | [![Peter Sieg](https://avatars.githubusercontent.com/u/3128659?s=130)](https://github.com/chasingmaxwell)
---- | ---
-[Luke](https://github.com/infiniteluke) | [Peter Sieg](https://github.com/chasingmaxwell)
+[![Luke](https://avatars.githubusercontent.com/u/1127238?s=130)](https://github.com/infiniteluke) | [![Peter Sieg](https://avatars.githubusercontent.com/u/3128659?s=130)](https://github.com/chasingmaxwell) | [![Flip](https://avatars.githubusercontent.com/u/1306968?s=130)](https://github.com/flipactual)
+--- | --- | ---
+[Luke](https://github.com/infiniteluke) | [Peter Sieg](https://github.com/chasingmaxwell) | [Flip](https://github.com/flipactual)

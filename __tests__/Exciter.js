@@ -133,10 +133,10 @@ test('deleteFailReject', (done) => {
   sinon.stub(exciterAllowReject.dynamo, 'delete').callsFake(awsPromiseReject(new Error('Bad thing happened')));
   return exciterAllowReject.delete(pk, 'fake')
     .then(() => {
-      expect('Promise should reject if rejectOnFail is true').toEqual(false);
+      expect('Promise should reject if rejectOnFail is true').toBe(false);
     })
     .catch(() => {
-      expect(true).toEqual(true);
+      expect(true).toBe(true);
     })
     .then(() => {
       exciterAllowReject.dynamo.delete.restore();
@@ -240,7 +240,7 @@ test('putFailReject', (done) => {
   sinon.stub(exciterAllowReject.dynamo, 'put').callsFake(awsPromiseReject(new Error('Something bad happened!')));
   return exciterAllowReject.put(data, 'fake')
     .then(() => {
-      expect('Promise should reject if rejectOnFail is true').toEqual(false);
+      expect('Promise should reject if rejectOnFail is true').toBe(false);
     })
     .catch((e) => {
       expect(e.message).toEqual('Something bad happened!');
@@ -304,7 +304,7 @@ test('patchFailReject', (done) => {
   sinon.stub(exciterAllowReject.dynamo, 'update').callsFake(awsPromiseReject(new Error('Something bad happened!')));
   return exciterAllowReject.patch(data, pk, 'fake', true)
     .then(() => {
-      expect('Promise should reject if rejectOnFail is true').toEqual(false);
+      expect('Promise should reject if rejectOnFail is true').toBe(false);
     })
     .catch((e) => {
       expect(e.message).toEqual('Something bad happened!');
@@ -359,7 +359,7 @@ test('catchHandler', (done) => {
   return exciter.catchHandler(error)
     .catch(err => expect(err).toBeUndefined())
     .then(() => {
-      expect(true).toEqual(true);
+      expect(true).toBe(true);
       return exciterAllowReject.catchHandler(error);
     })
     .then(res => expect(res).toBeUndefined())
@@ -751,7 +751,7 @@ test('normalizeDataValues', (done) => {
       userId: '345',
       nestedMap: { someOther: 'thing' },
     },
-    skipMe: null,
+    skipMe: undefined,
   };
   const expected = [
     { name: 'id', value: '123' },
@@ -793,13 +793,13 @@ test('normalizeExpressionAttributeNoName', (done) => {
 test('normalizeExpressionAttributeNoValue', (done) => {
   expect.assertions(2);
   try {
-    Exciter.normalizeExpressionAttribute(null, 'nullValueSimple');
+    Exciter.normalizeExpressionAttribute(undefined, 'nullValueSimple');
   }
   catch (err) {
     expect(err.message).toEqual('Attribute "nullValueSimple" is missing a value.');
   }
   try {
-    Exciter.normalizeExpressionAttribute({ value: null }, 'nullValueObject');
+    Exciter.normalizeExpressionAttribute({ value: undefined }, 'nullValueObject');
   }
   catch (err) {
     expect(err.message).toEqual('Attribute "nullValueObject" is missing a value.');
@@ -964,15 +964,15 @@ test('valueIsEmpty', (done) => {
   expect.assertions(8);
 
   // Things that aren't empty.
-  expect(Exciter.valueIsEmpty(1)).toEqual(false);
-  expect(Exciter.valueIsEmpty('not empty')).toEqual(false);
-  expect(Exciter.valueIsEmpty([1, 2])).toEqual(false);
-  expect(Exciter.valueIsEmpty({ not: 'empty' })).toEqual(false);
+  expect(Exciter.valueIsEmpty(1)).toBe(false);
+  expect(Exciter.valueIsEmpty('not empty')).toBe(false);
+  expect(Exciter.valueIsEmpty([1, 2])).toBe(false);
+  expect(Exciter.valueIsEmpty({ not: 'empty' })).toBe(false);
+  expect(Exciter.valueIsEmpty(null)).toBe(false);
 
   // Things that are empty.
-  expect(Exciter.valueIsEmpty(null)).toEqual(true);
-  expect(Exciter.valueIsEmpty(undefined)).toEqual(true);
-  expect(Exciter.valueIsEmpty('')).toEqual(true);
-  expect(Exciter.valueIsEmpty([])).toEqual(true);
+  expect(Exciter.valueIsEmpty(undefined)).toBe(true);
+  expect(Exciter.valueIsEmpty('')).toBe(true);
+  expect(Exciter.valueIsEmpty([])).toBe(true);
   done();
 });
