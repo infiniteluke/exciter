@@ -12,11 +12,10 @@ const data = {
   things: 'to store in DynamoDB',
 };
 const primaryKey = { id: data.id };
-const partitionKeyName = 'id';
 const tableName = 'someTable';
 
 // Create a record.
-exciter.create(data, tableName, partitionKeyName)
+exciter.create(data, primaryKey, tableName)
   .then((awsResponse) => {
     // Creation was successful, now we can do something with the response.
   });
@@ -28,7 +27,7 @@ exciter.update(data, primaryKey, tableName)
   });
 
 // Put a record. The entire entity will be replaced.
-exciter.put(data, tableName, partitionKeyName)
+exciter.put(data, primaryKey, tableName)
   .then((awsResponse) => {
     // Put was successful, now we can do something with the response.
   });
@@ -52,6 +51,30 @@ exciter.delete(primaryKey, tableName)
   });
 ```
 
+## Classes
+
+<dl>
+<dt><a href="#Exciter">Exciter</a></dt>
+<dd><p>Class representing a DynamoDB connection</p>
+</dd>
+</dl>
+
+## Typedefs
+
+<dl>
+<dt><a href="#TypedArray">TypedArray</a> : <code>Int8Array</code> | <code>Uint8Array</code> | <code>Uint8ClampedArray</code> | <code>Int16Array</code> | <code>Uint16Array</code> | <code>Int32Array</code> | <code>Uint32Array</code> | <code>Float32Array</code> | <code>Float64Array</code></dt>
+<dd><p>Array-like objects which provide a mechanism for accessing raw binary data.</p>
+</dd>
+<dt><a href="#PrimaryKey">PrimaryKey</a> : <code>Object.&lt;String, (String|Number|Buffer|File|Blob|ArrayBuffer|DataView|TypedArray)&gt;</code></dt>
+<dd><p>An object containing two properties. One for the partition/hash key and
+another for the sort/range key. The key names should always match your
+configuration on the DynamoDB table/index being operated on. The
+partition/hash key is always required. The sort/range key is required in
+write operations where the table/index uses a composite primary key, but is
+optional in every other case.</p>
+</dd>
+</dl>
+
 <a name="Exciter"></a>
 
 ## Exciter
@@ -62,7 +85,7 @@ Class representing a DynamoDB connection
 * [Exciter](#Exciter)
     * [new Exciter(options, [rejectOnFail])](#new_Exciter_new)
     * _instance_
-        * [.create(data, table, partitionKey)](#Exciter+create) ⇒ <code>Promise</code>
+        * [.create(data, primaryKey, table)](#Exciter+create) ⇒ <code>Promise</code>
         * [.update(data, primaryKey, table)](#Exciter+update) ⇒ <code>Promise</code>
         * [.put(data, primaryKey, table, createOnly)](#Exciter+put) ⇒ <code>Promise</code>
         * [.patch(data, primaryKey, table)](#Exciter+patch) ⇒ <code>Promise</code>
@@ -92,7 +115,7 @@ Class representing a DynamoDB connection
 
 <a name="Exciter+create"></a>
 
-### exciter.create(data, table, partitionKey) ⇒ <code>Promise</code>
+### exciter.create(data, primaryKey, table) ⇒ <code>Promise</code>
 Creates a record.
 
 **Kind**: instance method of <code>[Exciter](#Exciter)</code>  
@@ -103,8 +126,8 @@ Creates a record.
 | Param | Type | Description |
 | --- | --- | --- |
 | data | <code>Object</code> | Data to store in the given DynamoDB table. |
+| primaryKey | <code>[PrimaryKey](#PrimaryKey)</code> | A [PrimaryKey](#PrimaryKey) object containing partitionKey and sortKey key/value   properties.   NOTE: The values provided here will override properties of the same names   contained in the data argument if they are present there. |
 | table | <code>String</code> | The table in which to save the document. |
-| partitionKey | <code>String</code> | The name of the partitionKey attribute. This is used to ensure an   existing record does not already exist. |
 
 <a name="Exciter+update"></a>
 
@@ -121,7 +144,7 @@ This is a convenience method which simply proxies the patch() method.
 | Param | Type | Description |
 | --- | --- | --- |
 | data | <code>Object</code> | Data to store in the given DynamoDB table. Each top-level property will   become a top-level attribute in the DynamoDB table and will replace any   existing top-level attribute with the same name entirely. We'd like to   allow partial property updates which would recursively replace the   structure provided while leaving any missing sub-properties untouched,   but unfortunately we are prevented by this issue:   https://forums.aws.amazon.com/thread.jspa?threadID=162907 |
-| primaryKey | <code>Array</code> | An object containing partitionKey and sortKey key/value properties. |
+| primaryKey | <code>[PrimaryKey](#PrimaryKey)</code> | A [PrimaryKey](#PrimaryKey) object containing partitionKey and sortKey key/value   properties. |
 | table | <code>String</code> | The table in which to save the document. |
 
 <a name="Exciter+put"></a>
@@ -136,7 +159,7 @@ Creates or entirely replaces an existing record.
 | Param | Type | Description |
 | --- | --- | --- |
 | data | <code>Object</code> | Data to store in the given DynamoDB table. |
-| primaryKey | <code>Object</code> | An object containing partitionKey and sortKey key/value properties. The   values provided here will override properties of the same names   contained in the data argument if they are present there. |
+| primaryKey | <code>[PrimaryKey](#PrimaryKey)</code> | A [PrimaryKey](#PrimaryKey) object containing partitionKey and sortKey key/value   properties.   NOTE: The values provided here will override properties of the same names   contained in the data argument if they are present there. |
 | table | <code>String</code> | The table in which to save the document. |
 | createOnly | <code>Boolean</code> | Whether the operation should succeed if a record with the same partition   key value exists. |
 
@@ -154,7 +177,7 @@ Creates a new record if none exists.
 | Param | Type | Description |
 | --- | --- | --- |
 | data | <code>Object</code> | Data to store in the given DynamoDB table. Each top-level property will   become a top-level attribute in the DynamoDB table and will replace any   existing top-level attribute with the same name entirely. We'd like to   allow partial attribute updates which would recursively replace the   structure provided while leaving any missing sub-properties untouched,   but unfortunately we are prevented by this issue:   https://forums.aws.amazon.com/thread.jspa?threadID=162907 |
-| primaryKey | <code>Array</code> | An object containing partitionKey and sortKey key/value properties. |
+| primaryKey | <code>[PrimaryKey](#PrimaryKey)</code> | A [PrimaryKey](#PrimaryKey) object containing partitionKey and sortKey key/value   properties. |
 | table | <code>String</code> | The table in which to save the document. |
 
 <a name="Exciter+load"></a>
@@ -168,7 +191,7 @@ Retrieves documents from DynamoDB.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| primaryKey | <code>Object</code> | An object containing partitionKey and sortKey key/value properties. |
+| primaryKey | <code>[PrimaryKey](#PrimaryKey)</code> | A [PrimaryKey](#PrimaryKey) object containing partitionKey and sortKey key/value   properties. |
 | table | <code>String</code> | The table in which to save the document. |
 
 <a name="Exciter+query"></a>
@@ -182,7 +205,7 @@ Query DynamoDB.
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| primaryKey | <code>Object</code> |  | An object containing key value pairs for the DynamoDB partitionKey and   optionally sortKey. |
+| primaryKey | <code>[PrimaryKey](#PrimaryKey)</code> |  | A [PrimaryKey](#PrimaryKey) object containing key value pairs for the DynamoDB   partitionKey and optionally sortKey. |
 | table | <code>String</code> |  | The table in which to query. |
 | query | <code>Object</code> |  | An object which contains all the necessary information to query DynamoDB. |
 | query.index | <code>String</code> |  | The index with which to query. By default, query and scan operations are   performed against the table directly. |
@@ -211,7 +234,7 @@ DynamoDB.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| primaryKey | <code>Object</code> | An object containing key value pairs for the DynamoDB partitionKey and   optionally sortKey. |
+| primaryKey | <code>[PrimaryKey](#PrimaryKey)</code> | A [PrimaryKey](#PrimaryKey) object containing key value pairs for the DynamoDB   partitionKey and sortKey. |
 | table | <code>String</code> | The table from which to delete the document. |
 
 <a name="Exciter+getTotalCount"></a>
@@ -369,6 +392,23 @@ values when writing to DynamoDB.
 | --- | --- | --- |
 | value | <code>mixed</code> | The value to validate. |
 
+<a name="TypedArray"></a>
+
+## TypedArray : <code>Int8Array</code> &#124; <code>Uint8Array</code> &#124; <code>Uint8ClampedArray</code> &#124; <code>Int16Array</code> &#124; <code>Uint16Array</code> &#124; <code>Int32Array</code> &#124; <code>Uint32Array</code> &#124; <code>Float32Array</code> &#124; <code>Float64Array</code>
+Array-like objects which provide a mechanism for accessing raw binary data.
+
+**Kind**: global typedef  
+<a name="PrimaryKey"></a>
+
+## PrimaryKey : <code>Object.&lt;String, (String\|Number\|Buffer\|File\|Blob\|ArrayBuffer\|DataView\|TypedArray)&gt;</code>
+An object containing two properties. One for the partition/hash key and
+another for the sort/range key. The key names should always match your
+configuration on the DynamoDB table/index being operated on. The
+partition/hash key is always required. The sort/range key is required in
+write operations where the table/index uses a composite primary key, but is
+optional in every other case.
+
+**Kind**: global typedef  
 
 ## Contributors
 

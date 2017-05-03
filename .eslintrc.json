@@ -11,7 +11,7 @@
       "code": 100,
       "comments": 80,
       "ignoreUrls": true,
-      "ignorePattern": "(logger\\.|new Error\\(|new TypeError\\()",
+      "ignorePattern": "(\\* @typedef|logger\\.|new Error\\(|new TypeError\\()",
       "ignoreTrailingComments": true,
       "tabWidth": 2
     }],

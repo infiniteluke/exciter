@@ -147,10 +147,10 @@ test('deleteFailReject', (done) => {
 test('createProxy', (done) => {
   expect.assertions(2);
   const putSpy = jest.spyOn(exciter, 'put').mockImplementation(() => Promise.resolve());
-  return exciter.create({}, 'table', 'key')
+  return exciter.create({}, { key: 'stuff' }, 'table')
     .then(() => {
       expect(putSpy).toHaveBeenCalledTimes(1);
-      expect(putSpy).toHaveBeenCalledWith({}, 'table', 'key', true);
+      expect(putSpy).toHaveBeenCalledWith({}, { key: 'stuff' }, 'table', true);
     })
     .catch(err => expect(err).toBeUndefined())
     .then(() => {

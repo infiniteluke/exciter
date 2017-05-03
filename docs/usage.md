@@ -8,11 +8,10 @@ const data = {
   things: 'to store in DynamoDB',
 };
 const primaryKey = { id: data.id };
-const partitionKeyName = 'id';
 const tableName = 'someTable';
 
 // Create a record.
-exciter.create(data, tableName, partitionKeyName)
+exciter.create(data, primaryKey, tableName)
   .then((awsResponse) => {
     // Creation was successful, now we can do something with the response.
   });
@@ -24,7 +23,7 @@ exciter.update(data, primaryKey, tableName)
   });
 
 // Put a record. The entire entity will be replaced.
-exciter.put(data, tableName, partitionKeyName)
+exciter.put(data, primaryKey, tableName)
   .then((awsResponse) => {
     // Put was successful, now we can do something with the response.
   });
